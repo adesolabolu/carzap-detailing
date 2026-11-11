@@ -1,0 +1,6 @@
+{
+  "name": "Carzap - Professional Car Detailing",
+  "description": "Precision automotive detailing, ceramic coating, paint protection, and interior restoration services with online package booking and instant quote estimation.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

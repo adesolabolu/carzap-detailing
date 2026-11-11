@@ -1,0 +1,616 @@
+Below is the component for your context <!DOCTYPE html><html lang="en" class="scroll-smooth"><head>
+  <meta charset="utf-8">
+  <meta content="width=device-width, initial-scale=1.0" name="viewport">
+  <title>Carzap - Professional Car Detailing</title>
+
+  
+
+  <link href="https://fonts.googleapis.com" rel="preconnect">
+  <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@400;600;800&amp;family=Inter+Tight:wght@300;400;500;600&amp;family=Playfair+Display:ital,wght@0,400;0,700;1,400&amp;display=swap" rel="stylesheet">
+
+  <style>
+    .animate-on-scroll-hidden {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .animate-on-scroll-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    /* Custom scrollbar for dark theme */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #09090b;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #27272a;
+      border-radius: 4px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: #dc2626;
+    }
+  </style>
+<style type="text/tailwindcss">@import "tailwindcss";</style><script src="https://cdn.tailwindcss.com"></script><script>tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        'brand-primary': '#dc2626', // red-600
+        'brand-secondary': '#b91c1c', // red-700
+        'brand-text': '#ef4444', // red-500
+        'neutral-background': '#000000', // black
+        'neutral-surface': '#18181b', // zinc-900
+        'neutral-surface-alt': '#09090b', // zinc-950
+        'neutral-border': '#27272a', // zinc-800
+        'text-primary': '#ffffff',
+        'text-secondary': '#9ca3af', // gray-400
+        'text-tertiary': '#d1d5db', // gray-300
+      },
+      fontFamily: {
+        'primary': ['Bricolage Grotesque', 'sans-serif'],
+        'secondary': ['Inter Tight', 'sans-serif'],
+        'serif': ['Playfair Display', 'serif'],
+      },
+      spacing: {
+        's': '16px',
+        'm': '24px',
+        'l': '32px',
+        'xl': '48px',
+      },
+      borderRadius: {
+        'sm': '4px',
+        'md': '8px',
+        'lg': '12px',
+        'xl': '24px',
+      },
+      boxShadow: {
+        'cta': '0 4px 15px rgba(220, 38, 38, 0.3)',
+        'card': '0 20px 40px rgba(0, 0, 0, 0.5)',
+      }
+    }
+  }
+}</script></head>
+
+<body class="font-secondary bg-neutral-background text-text-primary overflow-x-hidden antialiased selection:bg-brand-primary/30">
+
+  <!-- Navbar -->
+  <nav class="fixed top-0 w-full z-50 border-b border-white/10 backdrop-blur-sm bg-black/20 transition-all duration-300" id="navbar">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        <!-- Logo -->
+        <div class="flex-shrink-0 flex items-center gap-2">
+          <a href="#" data-editable="text" data-path="header.logo" class="text-2xl font-serif italic font-bold text-white hover:text-brand-primary transition-colors">
+            Carzap
+          </a>
+        </div>
+        
+        <!-- Desktop Menu -->
+        <div class="hidden md:block">
+          <div class="ml-10 flex items-baseline space-x-8" data-editable-list="header.navLinks">
+            <a href="#services" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">Services</a>
+            <a href="#gallery" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">Gallery</a>
+            <a href="#about" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">About</a>
+            <a href="#pricing" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1">Pricing</a>
+          </div>
+        </div>
+
+        <!-- CTA Button Desktop -->
+        <div class="hidden md:block">
+          <button data-editable="text" data-path="header.cta" class="bg-brand-primary hover:bg-brand-secondary text-white px-6 py-2.5 rounded text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2 shadow-cta">
+            Book now
+          </button>
+        </div>
+
+        <!-- Mobile Menu Button -->
+        <div class="-mr-2 flex md:hidden">
+          <button id="mobile-menu-btn" class="text-gray-400 hover:text-white p-2 focus:outline-none">
+            <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+            </svg>
+          </button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="hidden md:hidden bg-neutral-surface border-b border-neutral-border shadow-2xl absolute w-full">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <a href="#services" class="text-gray-300 hover:text-white hover:bg-white/5 block px-3 py-2 rounded-md text-base font-medium">Services</a>
+        <a href="#gallery" class="text-gray-300 hover:text-white hover:bg-white/5 block px-3 py-2 rounded-md text-base font-medium">Gallery</a>
+        <a href="#about" class="text-gray-300 hover:text-white hover:bg-white/5 block px-3 py-2 rounded-md text-base font-medium">About</a>
+        <a href="#pricing" class="text-gray-300 hover:text-white hover:bg-white/5 block px-3 py-2 rounded-md text-base font-medium">Pricing</a>
+        <div class="pt-4 pb-2">
+          <button class="w-full bg-brand-primary hover:bg-brand-secondary text-white px-6 py-3 rounded text-sm font-medium transition-colors duration-200">
+            Book now
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main><section class="relative h-screen min-h-[700px] flex items-center justify-center overflow-hidden">
+  <!-- Background -->
+  <div class="absolute inset-0 z-0">
+    <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?q=80&amp;w=2070&amp;auto=format&amp;fit=crop" alt="Car detailing" class="w-full h-full object-cover">
+    <div class="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent"></div>
+    <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black/40"></div>
+  </div>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 w-full">
+    <div class="max-w-2xl space-y-6" data-animation-on-scroll="">
+      <h1 data-editable="text" data-path="hero.heading" class="text-4xl md:text-6xl font-secondary font-bold leading-tight tracking-tight text-white">
+        PROFESSIONAL CAR DETAILING THAT BRINGS YOUR VEHICLE TO LIFE
+      </h1>
+      <p data-editable="text" data-path="hero.subheading" class="text-lg text-text-tertiary leading-relaxed max-w-lg">
+        We transform your car with precision and care, delivering showroom-quality results that protect and enhance your vehicle's appearance.
+      </p>
+      <div class="flex flex-col sm:flex-row gap-4 pt-4">
+        <button class="bg-brand-primary hover:bg-brand-secondary text-white px-8 py-3.5 rounded text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2 shadow-cta">
+          Book now
+        </button>
+        <button class="border border-white/30 text-white hover:bg-white/10 px-8 py-3.5 rounded text-sm font-medium transition-colors duration-200 flex items-center justify-center gap-2">
+          Get Quote
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="services" class="py-24 bg-neutral-surface-alt">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section Header -->
+    <div class="mb-12 text-center" data-animation-on-scroll="">
+      <h4 class="text-text-secondary text-xs uppercase tracking-widest mb-2 font-medium">Services</h4>
+      <h2 data-editable="text" data-path="services.heading" class="text-3xl md:text-4xl font-secondary font-bold text-white mb-4">
+        Our detailing packages
+      </h2>
+      <p class="text-text-secondary max-w-2xl mx-auto">
+        Experience the ultimate in vehicle care with our comprehensive packages designed for every need.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+      <!-- Featured Service (Left) -->
+      <div class="lg:col-span-5 h-[500px] lg:h-auto" data-animation-on-scroll="">
+        <div class="group relative h-full flex flex-col overflow-hidden rounded-md bg-neutral-surface border border-neutral-border">
+          <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&amp;w=2071&amp;auto=format&amp;fit=crop" alt="Interior cleaning" class="w-full h-full object-cover opacity-40 group-hover:opacity-50 transition-opacity duration-500">
+            <div class="absolute inset-0 bg-gradient-to-t from-neutral-surface-alt via-neutral-surface/80 to-transparent"></div>
+          </div>
+          <div class="p-8 flex-1 flex flex-col justify-end z-10 relative">
+             <h3 class="text-3xl font-bold text-white mb-4">Interior detailing services</h3>
+             <p class="text-text-tertiary mb-6 max-w-md">Our packages cater to every need, ensuring your vehicle looks its best inside and out.</p>
+             <div>
+                <button class="bg-brand-primary hover:bg-brand-secondary text-white px-6 py-3 rounded text-sm font-medium transition-colors duration-200 inline-flex items-center gap-2">
+                  Book now
+                </button>
+             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Services (Right) -->
+      <div class="lg:col-span-7 grid grid-cols-1 md:grid-cols-2 gap-6" data-editable-list="services.list">
+        
+        <!-- Service 1 -->
+        <div class="group relative overflow-hidden rounded-md bg-neutral-surface border border-neutral-border" data-animation-on-scroll="">
+          <div class="aspect-video w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1552930294-6b595f4c2974?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Interior Detail" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-60 group-hover:opacity-80">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2">Interior Detailing</h3>
+            <p class="text-text-secondary text-sm mb-4 line-clamp-3">Thorough cleaning and restoration for your vehicle's interior surfaces.</p>
+            <a href="#" class="inline-flex items-center text-brand-text text-sm font-medium hover:text-brand-primary">
+              Learn more <span class="ml-1">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="group relative overflow-hidden rounded-md bg-neutral-surface border border-neutral-border" data-animation-on-scroll="">
+          <div class="aspect-video w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1507136566006-cfc505b114fc?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Exterior Detail" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-60 group-hover:opacity-80">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2">Exterior Detailing</h3>
+            <p class="text-text-secondary text-sm mb-4 line-clamp-3">Comprehensive wash and polish to enhance your car's shine.</p>
+            <a href="#" class="inline-flex items-center text-brand-text text-sm font-medium hover:text-brand-primary">
+              Book now <span class="ml-1">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="group relative overflow-hidden rounded-md bg-neutral-surface border border-neutral-border" data-animation-on-scroll="">
+          <div class="aspect-video w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1605152276897-4f618f831968?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Full Service" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-60 group-hover:opacity-80">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2">Full-Service Detailing</h3>
+            <p class="text-text-secondary text-sm mb-4 line-clamp-3">All-inclusive package for a complete vehicle transformation.</p>
+            <a href="#" class="inline-flex items-center text-brand-text text-sm font-medium hover:text-brand-primary">
+              Learn more <span class="ml-1">→</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="group relative overflow-hidden rounded-md bg-neutral-surface border border-neutral-border" data-animation-on-scroll="">
+          <div class="aspect-video w-full overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Ceramic" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110 opacity-60 group-hover:opacity-80">
+          </div>
+          <div class="p-6">
+            <h3 class="text-xl font-bold text-white mb-2">Paint Protection</h3>
+            <p class="text-text-secondary text-sm mb-4 line-clamp-3">Safeguard your vehicle's finish with our protective solutions.</p>
+            <a href="#" class="inline-flex items-center text-brand-text text-sm font-medium hover:text-brand-primary">
+              Book now <span class="ml-1">→</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+<section class="py-24 bg-neutral-background">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center" data-animation-on-scroll="">
+      <h4 class="text-text-secondary text-xs uppercase tracking-widest mb-2 font-medium">Process</h4>
+      <h2 class="text-3xl md:text-4xl font-secondary font-bold text-white mb-4">How we work</h2>
+      <p class="text-text-secondary max-w-2xl mx-auto">
+        Our streamlined detailing process ensures a hassle-free and exceptional service experience.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8" data-editable-list="process.steps">
+      <!-- Step 1 -->
+      <div class="group relative h-96 overflow-hidden rounded-md" data-animation-on-scroll="">
+        <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Assessment" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <span class="text-xs font-mono text-brand-text mb-2 block">STEP 01</span>
+          <h3 class="text-2xl font-bold text-white mb-2">Initial vehicle assessment</h3>
+          <p class="text-text-secondary text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+            We inspect every inch of your vehicle to determine the best course of action for restoration.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="group relative h-96 overflow-hidden rounded-md" data-animation-on-scroll="">
+        <img src="https://images.unsplash.com/photo-1600661653561-629509216228?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Washing" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <span class="text-xs font-mono text-brand-text mb-2 block">STEP 02</span>
+          <h3 class="text-2xl font-bold text-white mb-2">Precision cleaning</h3>
+          <p class="text-text-secondary text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+            Using premium tools and environmentally friendly products, we deep clean every surface.
+          </p>
+        </div>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="group relative h-96 overflow-hidden rounded-md" data-animation-on-scroll="">
+        <img src="https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Finish" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110 opacity-80">
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+        <div class="absolute bottom-0 left-0 p-8 w-full">
+          <span class="text-xs font-mono text-brand-text mb-2 block">STEP 03</span>
+          <h3 class="text-2xl font-bold text-white mb-2">Final quality inspection</h3>
+          <p class="text-text-secondary text-sm opacity-0 group-hover:opacity-100 transition-all duration-300 transform translate-y-4 group-hover:translate-y-0">
+            A rigorous final check ensures your vehicle meets our high standards before delivery.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="about" class="py-24 bg-neutral-surface-alt border-t border-neutral-surface">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-12 text-center" data-animation-on-scroll="">
+      <h4 class="text-text-secondary text-xs uppercase tracking-widest mb-2 font-medium">Testimonials</h4>
+      <h2 class="text-3xl md:text-4xl font-secondary font-bold text-white mb-4">What our customers say</h2>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center" data-editable-list="testimonials">
+      <!-- Testimonial 1 -->
+      <div class="p-6 bg-neutral-surface rounded-lg border border-neutral-border" data-animation-on-scroll="">
+        <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 border-2 border-neutral-border">
+          <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="John Smith" class="w-full h-full object-cover">
+        </div>
+        <h4 class="font-bold text-white">John Smith</h4>
+        <p class="text-xs text-brand-text mb-4">Local business owner</p>
+        <div class="flex justify-center gap-1 mb-4 text-yellow-500 text-xs">
+           <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="text-text-secondary text-sm leading-relaxed">"The attention to detail was incredible. My car looks better than when I first bought it!"</p>
+      </div>
+
+      <!-- Testimonial 2 -->
+      <div class="p-6 bg-neutral-surface rounded-lg border border-neutral-border" data-animation-on-scroll="">
+        <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 border-2 border-neutral-border">
+          <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Emily Johnson" class="w-full h-full object-cover">
+        </div>
+        <h4 class="font-bold text-white">Emily Johnson</h4>
+        <p class="text-xs text-brand-text mb-4">Marketing professional</p>
+        <div class="flex justify-center gap-1 mb-4 text-yellow-500 text-xs">
+           <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="text-text-secondary text-sm leading-relaxed">"Professional, fast, and the results exceeded my expectations. Highly recommended!"</p>
+      </div>
+
+      <!-- Testimonial 3 -->
+      <div class="p-6 bg-neutral-surface rounded-lg border border-neutral-border" data-animation-on-scroll="">
+        <div class="w-16 h-16 rounded-full overflow-hidden mx-auto mb-4 border-2 border-neutral-border">
+          <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&amp;w=200&amp;auto=format&amp;fit=crop" alt="Michael Rodriguez" class="w-full h-full object-cover">
+        </div>
+        <h4 class="font-bold text-white">Michael Rodriguez</h4>
+        <p class="text-xs text-brand-text mb-4">Car enthusiast</p>
+        <div class="flex justify-center gap-1 mb-4 text-yellow-500 text-xs">
+           <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+        </div>
+        <p class="text-text-secondary text-sm leading-relaxed">"They transformed my vintage car. The ceramic coating looks absolutely stunning."</p>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="gallery" class="py-24 bg-neutral-background relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+    <div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-6" data-animation-on-scroll="">
+      <div>
+         <h4 class="text-text-secondary text-xs uppercase tracking-widest mb-2 font-medium">Showcase</h4>
+         <h2 class="text-3xl md:text-4xl font-secondary font-bold text-white">Before and after</h2>
+         <p class="text-text-secondary mt-2">See the dramatic transformations we deliver.</p>
+      </div>
+      <div class="flex gap-2">
+         <button id="gallery-prev" class="p-2 rounded-full border border-neutral-border text-white hover:bg-neutral-surface transition cursor-pointer hover:text-brand-primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"></path></svg></button>
+         <button id="gallery-next" class="p-2 rounded-full border border-neutral-border text-white hover:bg-neutral-surface transition cursor-pointer hover:text-brand-primary"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"></path></svg></button>
+      </div>
+    </div>
+
+    <div id="gallery-container" class="flex overflow-x-auto snap-x snap-mandatory gap-4 scroll-smooth pb-4" style="scrollbar-width: none; -ms-overflow-style: none;" data-editable-list="gallery.items">
+       <div class="min-w-[85%] md:min-w-[calc(33.333%-11px)] snap-start h-80 rounded-lg overflow-hidden relative group shrink-0" data-animation-on-scroll="">
+          <img src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gallery 1" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+          <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             <span class="text-white font-bold tracking-widest uppercase border border-white px-4 py-2">View</span>
+          </div>
+       </div>
+       <div class="min-w-[85%] md:min-w-[calc(33.333%-11px)] snap-start h-80 rounded-lg overflow-hidden relative group shrink-0" data-animation-on-scroll="">
+          <img src="https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gallery 2" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+           <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             <span class="text-white font-bold tracking-widest uppercase border border-white px-4 py-2">View</span>
+          </div>
+       </div>
+       <div class="min-w-[85%] md:min-w-[calc(33.333%-11px)] snap-start h-80 rounded-lg overflow-hidden relative group shrink-0" data-animation-on-scroll="">
+          <img src="https://images.unsplash.com/photo-1549399542-7e3f8b79c341?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gallery 3" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+           <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             <span class="text-white font-bold tracking-widest uppercase border border-white px-4 py-2">View</span>
+          </div>
+       </div>
+       <div class="min-w-[85%] md:min-w-[calc(33.333%-11px)] snap-start h-80 rounded-lg overflow-hidden relative group shrink-0" data-animation-on-scroll="">
+          <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?q=80&amp;w=800&amp;auto=format&amp;fit=crop" alt="Gallery 4" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+           <div class="absolute inset-0 flex items-center justify-center bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+             <span class="text-white font-bold tracking-widest uppercase border border-white px-4 py-2">View</span>
+          </div>
+       </div>
+    </div>
+  </div>
+</section>
+<section id="pricing" class="py-24 bg-neutral-surface-alt">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+     <div class="mb-8 text-center" data-animation-on-scroll="">
+       <h4 class="text-text-secondary text-xs uppercase tracking-widest mb-2 font-medium">Pricing</h4>
+       <h2 class="text-3xl md:text-4xl font-secondary font-bold text-white mb-4">Transparent pricing</h2>
+       <p class="text-text-secondary max-w-2xl mx-auto">Choose the perfect detailing package that fits your needs and budget.</p>
+     </div>
+     
+     <!-- Toggle -->
+     <div class="flex justify-center mb-12" data-animation-on-scroll="">
+       <div class="bg-neutral-surface p-1 rounded-full border border-neutral-border inline-flex relative">
+          <div id="price-toggle-bg" class="absolute top-1 bottom-1 w-[86px] bg-white rounded-full transition-all duration-300 left-[92px]"></div>
+          <button onclick="setBilling('monthly')" id="btn-monthly" class="relative z-10 px-6 py-2 rounded-full text-sm font-medium transition-colors text-text-secondary hover:text-white w-[90px]">
+            Monthly
+          </button>
+          <button onclick="setBilling('yearly')" id="btn-yearly" class="relative z-10 px-6 py-2 rounded-full text-sm font-medium transition-colors text-black w-[90px]">
+            Yearly
+          </button>
+       </div>
+     </div>
+
+     <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+       <!-- Basic Plan -->
+       <div class="p-8 rounded-lg bg-neutral-surface border border-neutral-border text-white hover:border-brand-primary transition-colors duration-300" data-animation-on-scroll="">
+         <div class="mb-8">
+           <h3 class="font-bold text-lg mb-2">Basic detail</h3>
+           <p class="text-sm text-text-secondary">Essential package for regular maintenance</p>
+         </div>
+         <div class="mb-8">
+           <div class="flex items-baseline">
+             <span class="text-4xl font-bold price-val" data-monthly="99" data-yearly="990">$990</span>
+             <span class="text-sm text-text-secondary price-period">/yr</span>
+           </div>
+           <p class="text-xs mt-2 text-green-500">Save 15%</p>
+         </div>
+         <button class="w-full mb-8 border border-white/20 hover:bg-white hover:text-black text-white py-3 rounded text-sm font-medium transition-colors">
+           Book now
+         </button>
+         <ul class="space-y-4">
+           <li class="flex items-start gap-3 text-sm"><span class="text-white">✓</span> <span class="text-text-tertiary">Regular exterior maintenance</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-white">✓</span> <span class="text-text-tertiary">Quarterly interior cleaning</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-white">✓</span> <span class="text-text-tertiary">Seasonal protection treatments</span></li>
+         </ul>
+       </div>
+
+       <!-- Business Plan (Recommended) -->
+       <div class="p-8 rounded-lg bg-white text-black shadow-xl scale-105 z-10" data-animation-on-scroll="">
+         <div class="mb-8">
+           <h3 class="font-bold text-lg mb-2">Business detail</h3>
+           <p class="text-sm text-gray-600">Most popular for complete care</p>
+         </div>
+         <div class="mb-8">
+           <div class="flex items-baseline">
+             <span class="text-4xl font-bold price-val" data-monthly="199" data-yearly="1990">$1990</span>
+             <span class="text-sm text-gray-500 price-period">/yr</span>
+           </div>
+           <p class="text-xs mt-2 text-green-600">Save 15%</p>
+         </div>
+         <button class="w-full mb-8 bg-brand-primary hover:bg-brand-secondary text-white py-3 rounded text-sm font-medium transition-colors shadow-cta">
+           Book annual business
+         </button>
+         <ul class="space-y-4">
+           <li class="flex items-start gap-3 text-sm"><span class="text-black font-bold">✓</span> <span class="text-gray-700">Multiple detailed services</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-black font-bold">✓</span> <span class="text-gray-700">Advanced paint protection</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-black font-bold">✓</span> <span class="text-gray-700">Ceramic coating included</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-black font-bold">✓</span> <span class="text-gray-700">Priority scheduling</span></li>
+         </ul>
+       </div>
+
+       <!-- Enterprise Plan -->
+       <div class="p-8 rounded-lg bg-neutral-surface border border-neutral-border text-white hover:border-brand-primary transition-colors duration-300" data-animation-on-scroll="">
+         <div class="mb-8">
+           <h3 class="font-bold text-lg mb-2">Enterprise detail</h3>
+           <p class="text-sm text-text-secondary">VIP service for collectors</p>
+         </div>
+         <div class="mb-8">
+           <div class="flex items-baseline">
+             <span class="text-4xl font-bold price-val" data-monthly="299" data-yearly="2990">$2990</span>
+             <span class="text-sm text-text-secondary price-period">/yr</span>
+           </div>
+           <p class="text-xs mt-2 text-green-500">Save 15%</p>
+         </div>
+         <button class="w-full mb-8 border border-white/20 hover:bg-white hover:text-black text-white py-3 rounded text-sm font-medium transition-colors">
+           Book now
+         </button>
+         <ul class="space-y-4">
+           <li class="flex items-start gap-3 text-sm"><span class="text-white">✓</span> <span class="text-text-tertiary">Unlimited detailing services</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-white">✓</span> <span class="text-text-tertiary">Comprehensive restoration</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-white">✓</span> <span class="text-text-tertiary">Full paint protection</span></li>
+           <li class="flex items-start gap-3 text-sm"><span class="text-white">✓</span> <span class="text-text-tertiary">24/7 priority support</span></li>
+         </ul>
+       </div>
+     </div>
+  </div>
+</section>
+
+<script>
+  // Pricing Toggle Logic
+  function setBilling(cycle) {
+    const bg = document.getElementById('price-toggle-bg');
+    const btnMonthly = document.getElementById('btn-monthly');
+    const btnYearly = document.getElementById('btn-yearly');
+    const prices = document.querySelectorAll('.price-val');
+    const periods = document.querySelectorAll('.price-period');
+
+    if (cycle === 'monthly') {
+      bg.classList.remove('left-[92px]');
+      bg.classList.add('left-1');
+      
+      btnMonthly.classList.remove('text-text-secondary', 'hover:text-white');
+      btnMonthly.classList.add('text-black');
+      
+      btnYearly.classList.add('text-text-secondary', 'hover:text-white');
+      btnYearly.classList.remove('text-black');
+
+      prices.forEach(p => p.textContent = ' + p.dataset.monthly);
+      periods.forEach(p => p.textContent = '/mo');
+    } else {
+      bg.classList.add('left-[92px]');
+      bg.classList.remove('left-1');
+
+      btnYearly.classList.remove('text-text-secondary', 'hover:text-white');
+      btnYearly.classList.add('text-black');
+
+      btnMonthly.classList.add('text-text-secondary', 'hover:text-white');
+      btnMonthly.classList.remove('text-black');
+
+      prices.forEach(p => p.textContent = ' + p.dataset.yearly);
+      periods.forEach(p => p.textContent = '/yr');
+    }
+  }
+
+  // Gallery Scroll Logic
+  document.addEventListener('DOMContentLoaded', () => {
+    const galleryContainer = document.getElementById('gallery-container');
+    const prevBtn = document.getElementById('gallery-prev');
+    const nextBtn = document.getElementById('gallery-next');
+
+    if(galleryContainer && prevBtn && nextBtn) {
+      prevBtn.addEventListener('click', () => {
+        // Scroll width: item width + gap (16px)
+        const item = galleryContainer.querySelector('div');
+        const scrollAmount = item ? item.offsetWidth + 16 : 300;
+        galleryContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+      });
+      nextBtn.addEventListener('click', () => {
+        const item = galleryContainer.querySelector('div');
+        const scrollAmount = item ? item.offsetWidth + 16 : 300;
+        galleryContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      });
+    }
+  });
+</script></main>
+
+  <!-- Footer -->
+  <footer class="py-12 bg-black border-t border-neutral-border text-center">
+    <div class="max-w-7xl mx-auto px-6">
+      <h2 data-editable="text" data-path="footer.heading" class="text-2xl font-secondary font-bold text-white mb-6">
+        Book your detailing service today
+      </h2>
+      <button class="bg-brand-primary hover:bg-brand-secondary text-white px-8 py-3 rounded text-sm font-medium transition-colors duration-200 inline-flex items-center justify-center gap-2 shadow-cta">
+        Schedule Appointment
+      </button>
+      <div class="mt-12 text-slate-500 text-sm">
+        © 2024 Carzap. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Scroll Reveal
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('animate-on-scroll-visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+
+      document.querySelectorAll('[data-animation-on-scroll]').forEach(el => {
+        el.classList.add('animate-on-scroll-hidden');
+        observer.observe(el);
+      });
+
+      // Navbar Mobile Logic
+      const btn = document.getElementById('mobile-menu-btn');
+      const menu = document.getElementById('mobile-menu');
+      if(btn && menu) {
+        btn.addEventListener('click', () => {
+          menu.classList.toggle('hidden');
+          const icon = btn.querySelector('svg path');
+          if(menu.classList.contains('hidden')) {
+             icon.setAttribute('d', 'M4 6h16M4 12h16M4 18h16');
+          } else {
+             icon.setAttribute('d', 'M6 18L18 6M6 6l12 12');
+          }
+        });
+      }
+      
+      // Navbar background on scroll
+      const nav = document.getElementById('navbar');
+      window.addEventListener('scroll', () => {
+        if(window.scrollY > 50) {
+          nav.classList.add('bg-black/90', 'shadow-lg');
+          nav.classList.remove('bg-black/20');
+        } else {
+          nav.classList.remove('bg-black/90', 'shadow-lg');
+          nav.classList.add('bg-black/20');
+        }
+      });
+    });
+  </script>
+
+
+</body></html>
